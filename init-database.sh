@@ -12,7 +12,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         PRIMARY KEY(id)
     );
 
-    INSERT INTO user(id, login, password, user_type)
+    INSERT INTO "user"(id, login, password, user_type)
     VALUES (1, 'Jurek', 'asdf', 'guide');
 
 EOSQL
