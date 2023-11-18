@@ -1,8 +1,4 @@
-
 import psycopg2
-from flask_sqlalchemy import SQLAlchemy
-
-
 
 
 def generate_postgres_con():

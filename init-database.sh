@@ -5,7 +5,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     CREATE USER docker;
 
     CREATE TABLE "user"(
-        id int not null,
+        id SERIAL not null,
         login char(70) not null,
         password text not null,
         name char(60) not null,
@@ -15,7 +15,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         PRIMARY KEY(id)
     );
 
-    INSERT INTO "user"(id, login, password, email, user_type)
-    VALUES (1, 'Jurek', 'asdf', 'a@a.pl', 'guide');
+    INSERT INTO "user"(id, login, password, name, surname, email, user_type)
+    VALUES (1, 'Jurek', 'asdf', 'Jerzy', 'Jerzowski', 'a@a.pl', 'guide');
 
 EOSQL
