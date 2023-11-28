@@ -1,5 +1,6 @@
 import json
 
+from Crypto.Cipher import AES
 from flask import request, Response, Blueprint
 
 from src.users.models.User import User
@@ -26,11 +27,13 @@ def login():
 
     user_query = db.select(User).filter_by(login=user_json['login'])
     user = db.session.execute(user_query).scalar_one_or_none()
+    print(user_json['password'])
+    print(user.password)
 
-    if user is not None:
+    if user_json['password'] == user.password:
         return Response({'Authenticated correctly': True}, 200)
     else:
-        return Response("User doesn't exist in database", 400)
+        return Response("Incorrect login or password", 400)
 
 
 @user_blueprint.route('/update_user', methods=['PUT'])
