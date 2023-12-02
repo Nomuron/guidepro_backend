@@ -1,4 +1,6 @@
 import json
+import random
+import string
 
 from flask import Blueprint, Response, request
 from flask_mail import Message
@@ -55,8 +57,27 @@ def delete_user():
 
 @user_blueprint.route('/password_reset', methods=['PUT'])
 def send_mail():
-    mail_message = Message('Reset hasła', sender='guidepro12@gmail.com', recipients=['Nomuron@gmail.com'])
+    user_json = json.loads(request.data)
 
-    mail_message.body = reset_mail_body
+    new_pass = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
+    print(new_pass)
+
+    user_query = db.select(User).filter_by(email=user_json['email'])
+    user = db.session.execute(user_query).scalar_one_or_none()
+
+    if user is None:
+        return Response('User does not exist', 400)
+
+    print(user.password)
+
+    setattr(user, 'password', new_pass)
+    print(user.password)
+
+    db.session.commit()
+
+    mail_message = Message('Reset hasła', sender='guidepro12@gmail.com', recipients=[user.email])
+
+    mail_message.body = reset_mail_body.format(name=user.name, password=new_pass)
     mail.send(mail_message)
-    return Response('hej', 200)
+
+    return Response('Password reset correctly', 200)
