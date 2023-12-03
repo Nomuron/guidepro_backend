@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_cors import CORS
 
@@ -7,7 +9,10 @@ from src.utils import db, mail
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost:5432/guidepro'
+
+db_host = 'db' if os.environ.get('OS_ENV', 'local') == 'docker' else 'localhost'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:postgres@{db_host}:5432/guidepro'
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -15,6 +20,7 @@ app.config['MAIL_USERNAME'] = 'guidepro12@gmail.com'
 app.config['MAIL_PASSWORD'] = 'lxladctgjkpmjkjh'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
+
 db.init_app(app)
 mail.init_app(app)
 
