@@ -21,8 +21,7 @@ or click CTRL+C if you decided to not used -d flag
 Flask created via docker compose will be working on porst 5001
 <br>
 <br>
-In order to
-To run Flask locally run command
+In order to run Flask locally run command
 <br>
 `flask --app src/app.py run`
 <br>
