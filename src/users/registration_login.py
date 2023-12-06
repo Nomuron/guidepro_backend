@@ -1,6 +1,5 @@
 import json
 
-from Crypto.Cipher import AES
 from flask import request, Response, Blueprint
 
 from src.users.models.User import User
