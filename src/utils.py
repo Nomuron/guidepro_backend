@@ -7,8 +7,11 @@ mail = Mail()
 reset_mail_body = """
 Cześć {name}
 \r\n
-Oto twoje nowe hasło. Możesz je zmienić na bardziej wygodnie dla ciebie w twoim profilu
-Hasło: {password}
+Oto twoje nowe hasło:
+\r\n
+{password}
+\r\n
+Zalecamy zmianę tego hasła. Możesz je zmienić na swoim profilu.
 \r\n
 Jeśli nie wysyłałeś prośby o reset hasła, skontaktuj się z administracją strony
 \r\n

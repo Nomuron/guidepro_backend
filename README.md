@@ -2,7 +2,7 @@
 ## Back-end for GuidePRO bacherole of engineering final project
 
 ### Running instruction
-To be able to creat back-end together with PostgreSQL run comman
+To be able to create back-end together with PostgreSQL run command
 <br>
 `docker compose up -d` 
 <br>
