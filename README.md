@@ -9,18 +9,15 @@ To be able to create back-end together with PostgreSQL run command
 or if you want to see PostgreSQL and Flask logs
 <br>
 `docker compose up` 
-<br>
-<br>
+
 To kill containers you either need to run command 
 <br>
 `docker compose down`
 <br>
 or click CTRL+C if you decided to not used -d flag
-<br>
-<br>
+
 Flask created via docker compose will be working on porst 5001
-<br>
-<br>
+
 In order to run Flask locally run command
 <br>
 `flask --app src/app.py run`
@@ -41,5 +38,3 @@ containers with unattaching volumes via running command
 and then
 <br>
 `docker compose up`
-<br>
-<br>
