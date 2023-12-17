@@ -52,10 +52,10 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     CREATE TABLE user_guide(
         user_guide_id integer REFERENCES "user"(id) UNIQUE,
-        guide_type text NOT NULL,
+        guide_type VARCHAR(50) NOT NULL,
         has_certificate BOOLEAN NOT NULL,
         age integer NOT NULL,
-        gender text NOT NULL,
+        gender CHAR(1) NOT NULL,
         about_me text NOT NULL,
         interests text NOT NULL
     );
@@ -65,32 +65,32 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     INSERT INTO user_guide(user_guide_id, guide_type, has_certificate, age, gender, about_me, interests) VALUES (3, 'GÓRSKI', '1', 40, 'm', 'Moje opowieści odkrywają przed Tobą świat z zupełnie nowej perspektywy. Jako przewodnik staram się nie tylko przekazać informacje, ale również wprowadzić Cię w klimat każdego miejsca, które razem odkrywamy.', 'restauracje kuchni azjatyckiej, jazda na rowerze, box');
     INSERT INTO user_guide(user_guide_id, guide_type, has_certificate, age, gender, about_me, interests) VALUES (4, 'MUZEALNY', '1', 40, 'f', 'Podążając moimi śladami, zanurzysz się w niepowtarzalnych historiach, tajemniczych zakątkach i lokalnych zwyczajach. Razem z Tobą tworzę podróż pełną niezapomnianych chwil.', 'historia, książki, spacery, architektura');
     INSERT INTO user_guide(user_guide_id, guide_type, has_certificate, age, gender, about_me, interests) VALUES (5, 'TERENOWY', '1', 50, 'm', 'Jako pasjonat podróży i przewodnik, oferuję nie tylko zwiedzanie miejsc, ale autentyczne doświadczenia. Każde spotkanie ze mną to możliwość zgłębienia kultury, historii i smaków odległych krain.', 'bieg długodystansowy, natura, tenis, squash');
-    INSERT INTO user_guide(user_guide_id, guide_type, has_certificate, age, gender, about_me, interests) VALUES (6, 'MIEJSKI', '0', 50, 'f', 'W moim towarzystwie podróż staje się nie tylko widokiem, ale uczuciem. Przewodzę Cię z entuzjazmem przez zabytkowe uliczki, malownicze krajobrazy i unikalne doświadczenia, zawsze z myślą o Twojej wyjątkowej podróży.', 'książki, gra na gitarze, siatkówka');
+    INSERT INTO user_guide(user_guide_id, guide_type, has_certificate, age, gender, about_me, interests) VALUES (6, 'MIEJSKI', '0', 50, 'n', 'W moim towarzystwie podróż staje się nie tylko widokiem, ale uczuciem. Przewodzę Cię z entuzjazmem przez zabytkowe uliczki, malownicze krajobrazy i unikalne doświadczenia, zawsze z myślą o Twojej wyjątkowej podróży.', 'książki, gra na gitarze, siatkówka');
 
-    CREATE TABLE user_language_mapping(
+    CREATE TABLE user_language(
+        id SERIAL NOT NULL PRIMARY KEY,
         user_id integer REFERENCES "user"(id),
-        language_id integer REFERENCES language(id),
-        PRIMARY KEY (user_id, language_id)
+        language_id integer REFERENCES language(id)
     );
 
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (1, 1);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (1, 2);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (1, 3);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (1, 4);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (1, 5);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (1, 6);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (2, 1);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (3, 2);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (4, 3);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (4, 4);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (4, 5);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (5, 1);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (5, 2);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (5, 3);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (6, 1);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (6, 4);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (6, 5);
-    INSERT INTO user_language_mapping(user_id, language_id) VALUES (6, 6);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (1, 1, 1);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (2, 1, 2);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (3, 1, 3);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (4, 1, 4);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (5, 1, 5);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (6, 1, 6);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (7, 2, 1);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (8, 3, 2);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (9, 4, 3);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (10, 4, 4);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (11, 4, 5);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (12, 5, 1);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (13, 5, 2);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (14, 5, 3);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (15, 6, 1);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (16, 6, 4);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (17, 6, 5);
+    INSERT INTO user_language(id, user_id, language_id) VALUES (18, 6, 6);
 
     CREATE TABLE category(
         id SERIAL NOT NULL PRIMARY KEY,
@@ -146,7 +146,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
         additional_fee text NOT NULL,
         max_person_amount SMALLINT NOT NULL,
         min_person_amount SMALLINT NOT NULL,
-        trip_town VARCHAR(100) NOT NULL,
+        trip_town VARCHAR(50) NOT NULL,
         meeting_point_address text,
         geographical_coordinates POINT,
         remember_about text,
@@ -177,84 +177,84 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
     INSERT INTO trip(id, name, description_short, user_guide_id, duration, language_id, price, additional_fee, max_person_amount, min_person_amount, trip_town, meeting_point_address, geographical_coordinates, remember_about, additional_info, is_removed, length) VALUES (20, 'Wystawa plakatów wykonanych przez studentów uczelni w Trójmieście w tematyce "Ekologiczne Wyzwania"', 'Odkryj kreatywność studentów, zwiedzając wystawę plakatów poświęconą ekologicznym wyzwaniom. Wspieraj młodych artystów i czerp inspirację z ich dzieł.', 2, 3, 4, 5.5, 'brak', 30, 20, 'Gdańsk', 'Targ Węglowy 6, 80-836 Gdańsk', NULL, NULL, NULL, '0', 1);
 
 
-    CREATE TABLE trip_category_mapping(
+    CREATE TABLE trip_category(
+        id SERIAL NOT NULL PRIMARY KEY,
         category_id integer REFERENCES category(id),
-        trip_id integer REFERENCES image(id),
-        PRIMARY KEY (category_id, trip_id)
+        trip_id integer REFERENCES image(id)
     );
 
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '1');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (4, '1');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (8, '2');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (6, '3');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '4');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (3, '4');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (8, '5');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (7, '5');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '6');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (8, '6');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (10, '7');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '7');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (9, '8');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '8');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (6, '8');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '9');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '10');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (8, '10');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (3, '10');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '11');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '12');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (10, '12');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '13');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (3, '13');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (8, '13');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (4, '14');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '14');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '15');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (4, '15');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (7, '15');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '16');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (2, '16');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (5, '17');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '17');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (5, '18');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '18');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (1, '19');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (4, '19');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (3, '20');
-    INSERT INTO trip_category_mapping(category_id, trip_id) VALUES (8, '20');
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (1, 2, 1);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (2, 4, 1);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (3, 8, 2);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (4, 6, 3);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (5, 1, 4);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (6, 3, 4);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (7, 8, 5);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (8, 7, 5);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (9, 2, 6);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (10, 8, 6);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (11, 10, 7);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (12, 2, 7);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (13, 9, 8);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (14, 2, 8);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (15, 6, 8);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (16, 2, 9);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (17, 1, 10);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (18, 8, 10);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (19, 3, 10);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (20, 1, 11);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (21, 2, 12);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (22, 10, 12);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (23, 1, 13);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (24, 3, 13);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (25, 8, 13);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (26, 4, 14);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (27, 2, 14);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (28, 2, 15);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (29, 4, 15);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (30, 7, 15);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (31, 1, 16);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (32, 2, 16);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (33, 5, 17);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (34, 1, 17);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (35, 5, 18);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (36, 1, 18);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (37, 1, 19);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (38, 4, 19);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (39, 3, 20);
+    INSERT INTO trip_category(id, category_id, trip_id) VALUES (40, 8, 20);
 
-    CREATE TABLE image_mapping(
+    CREATE TABLE trip_image(
+        id SERIAL NOT NULL PRIMARY KEY,
         image_id integer REFERENCES image(id),
-        trip_id integer REFERENCES image(id),
-        PRIMARY KEY (image_id, trip_id)
+        trip_id integer REFERENCES image(id)
     );
 
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (1, '1');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (2, '1');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (3, '1');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (4, '1');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (5, '1');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (1, '2');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (2, '2');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (3, '2');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (4, '3');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (5, '4');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (6, '5');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (7, '6');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (8, '7');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (9, '8');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (10, '9');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (11, '10');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (12, '11');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (13, '12');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (14, '13');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (15, '14');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (16, '15');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (17, '16');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (18, '17');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (19, '18');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (20, '19');
-    INSERT INTO image_mapping(image_id, trip_id) VALUES (20, '20');
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (1, 1, 1);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (2, 2, 1);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (3, 3, 1);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (4, 4, 1);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (5, 5, 1);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (6, 1, 2);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (7, 2, 2);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (8, 3, 2);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (9, 4, 3);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (10, 5, 4);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (11, 6, 5);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (12, 7, 6);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (13, 8, 7);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (14, 9, 8);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (15, 10, 9);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (16, 11, 10);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (17, 12, 11);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (18, 13, 12);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (19, 14, 13);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (20, 15, 14);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (21, 16, 15);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (22, 17, 16);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (23, 18, 17);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (24, 19, 18);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (25, 20, 19);
+    INSERT INTO trip_image(id, image_id, trip_id) VALUES (26, 20, 20);
 
 EOSQL
