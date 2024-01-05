@@ -20,8 +20,6 @@ def get_users():
     for user in users_json['users']:
         user.pop('_sa_instance_state')
 
-    print(users_json)
-
     return Response(json.dumps(users_json), 200, mimetype='application/json')
 
 
@@ -29,11 +27,11 @@ def get_users():
 def update_user():
     user_json = json.loads(request.data)
 
-    user_query = db.select(User).filter_by(login=user_json['login'])
+    user_query = db.select(User).filter_by(email=user_json['email'])
     user = db.session.execute(user_query).scalar_one()
 
     for attribute in user.__dict__:
-        if (attribute != 'login' or attribute != 'email') and attribute in user_json:
+        if (attribute != 'email') and attribute in user_json:
             setattr(user, attribute, user_json[attribute])
 
     db.session.commit()
@@ -45,18 +43,18 @@ def update_user():
 def delete_user():
     user_json = json.loads(request.data)
 
-    user_query = db.select(User).filter_by(login=user_json['login'])
+    user_query = db.select(User).filter_by(email=user_json['email'])
     user = db.session.execute(user_query).scalar_one()
     print(user)
 
     db.session.delete(user)
     db.session.commit()
 
-    return Response('User deleted', 204)
+    return Response('User deleted', 200)
 
 
 @user_blueprint.route('/password_reset', methods=['PUT'])
-def send_mail():
+def send_reset_password_mail():
     user_json = json.loads(request.data)
 
     new_pass = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
